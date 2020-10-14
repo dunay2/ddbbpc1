@@ -1,0 +1,81 @@
+@startuml
+
+
+
+
+Class Product
+{
+code  <P> : String
+description : String
+iva : IvaValue
+brand_code : String [0..1]
+measure : String [0..1]
+weight : Real [0..1]
+origin_country_code : String [0..1]
+}
+
+class Supermarket
+{
+code <P>:  String
+name <U1>: String
+address : String
+phone : String
+}
+
+Class Country
+{
+code <P> : Char(3)
+name <U1> : String
+continent : Continent
+}
+
+
+Class Supplier
+{
+code <P> : String
+name : String
+phone : String
+email : String
+webpage : String [0..1]
+}
+
+Class Supply
+{
+PVD : Real
+}
+
+
+
+
+(Supermarket, Product) .. Sells
+
+class Sells {
+  PVP:Real
+  stock : Integer
+}
+
+enum IvaValue
+{
+IVA_4
+IVA_10
+IVA_21
+}
+
+enum Continent
+{
+Europa
+Asia
+Africa
+America
+Oceania
+}
+
+
+Product  "0..*"- "0..1" Country : comesFrom
+Product  "1"-- "1..*" Supply : has
+Supplier "0..*"- "1" Country : IsFrom
+Supplier "1"- "1..*" Supply : supplies
+Supermarket  "1"- "1..*" Supply : receives
+Supermarket "1..*" - "1..*" Product
+
+@enduml

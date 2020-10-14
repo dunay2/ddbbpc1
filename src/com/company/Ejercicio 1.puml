@@ -1,0 +1,39 @@
+@startuml
+skinparam classAttributeIconSize 0
+class Supermarket
+{
+code <P>:  String
+name <U1>: String
+address : String
+phone : String
+}
+
+Class City
+{
+code <P>: Integer
+name : String
+numCitizens : Integer
+}
+
+Class Province
+{
+code <P>: Integer
+name <U1>:String
+extension : Real
+}
+
+class Employee
+{
+NSS <P> :String
+NIF <U1> : String
+name : String
+Address : String
+Phone : String
+email : String [0..1]
+}
+
+Province "1" -- "1..*" City : isIn
+City "1" - "1...*" Supermarket: isIn
+Employee "1..*" --  "1" Supermarket : works
+
+@enduml

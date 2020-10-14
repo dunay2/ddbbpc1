@@ -1,0 +1,141 @@
+@startuml
+
+Class Product
+{
+code  <P> : String
+description : String
+iva : IvaValue
+brand_code : String [0..1]
+measure : String [0..1]
+weight : Real [0..1]
+origin_country_code : String [0..1]
+}
+
+class Worker extends  Employee
+class Chief extends  Employee
+class Chief
+{
+title : String
+}
+note left:  disjoint, complete\n
+class Worker
+{
+hiredDate: Date
+rate : Integer
+}
+note right:  rate is integer between 1 & 5
+note left:  disjoint, complete\n
+class Section
+{
+code <P>: String
+name : String
+extension : Real
+lugar : String
+}
+
+
+class Supermarket
+{
+code <P>:  String
+name <U1>: String
+address : String
+phone : String
+}
+
+Class City
+{
+code <P>: Integer
+name : String
+numCitizens : Integer
+}
+
+Class Province
+{
+code <P>: Integer
+name <U1>:String
+extension : Real
+}
+
+class Employee
+{
+NSS <P> :String
+NIF <U1> : String
+name : String
+Address : String
+Phone : String
+email : String [0..1]
+}
+
+
+
+
+Class Country
+{
+code <P> : Char(3)
+name <U1> : String
+continent : Continent
+}
+
+
+Class Supplier
+{
+code <P> : String
+name : String
+phone : String
+email : String
+webpage : String [0..1]
+}
+
+
+Class Supply
+{
+PVD : Real
+}
+
+
+
+
+note "Section is weak respect Supermarket\n" as N2
+Supermarket .. N2
+N2 .. Section
+
+Supermarket "1"*- "1..*" Section : has
+Worker "1..*" --  "1" Supermarket : works
+Worker "1..*" -- "1" Chief: leads
+
+enum IvaValue
+{
+IVA_4
+IVA_10
+IVA_21
+}
+
+enum Continent
+{
+Europa
+Asia
+Africa
+America
+Oceania
+}
+
+Supermarket "1..*" - "1..*" Product
+Product  "0..*"- "0..1" Country : comesFrom
+Product  "1"- "1..*" Supply : has
+Supplier "0..*"-- "1" Country : IsFrom
+Supplier "1"- "1..*" Supply : supplies
+Supermarket  "1"- "1..*" Supply : receives
+Section "1" - "0..1" Chief : manages
+
+Province "1" - "1..*" City : IsIn
+Supermarket "1" -- "1...*" City: IsIn
+
+(Supermarket, Product) .. Sells
+
+class Sells {
+  PVP:Real
+  stock : Integer
+}
+
+
+@enduml

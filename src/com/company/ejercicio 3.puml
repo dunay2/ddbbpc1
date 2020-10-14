@@ -1,0 +1,58 @@
+@startuml
+
+
+
+class Supermarket
+{
+code <P>:  String
+name <U1>: String
+address : String
+phone : String
+}
+
+class Section
+{
+code <P>: String
+name : String
+extension : Real
+lugar : String
+
+}
+
+class Employee
+{
+NSS <P> :String
+NIF <U1> : String
+name : String
+Address : String
+Phone : String
+email : String [0..1]
+}
+
+
+class Worker extends  Employee
+class Chief extends  Employee
+class Chief
+{
+title : String
+}
+note left:  disjoint, complete
+class Worker
+{
+hireDate: Date
+rate: Integer
+}
+note left:  rate is integer between 1 & 5
+ note left:  disjoint, complete
+
+Section "1" -- "0..1" Chief : manages
+
+
+note "Section is weak respect Supermarket" as N2
+Supermarket .. N2
+N2 .. Section
+
+Supermarket "1"*-- "1..*" Section : Has
+Worker "1..*" --  "1" Supermarket : works
+Worker "1..*" -- "1" Chief: LeadedBy
+@enduml
